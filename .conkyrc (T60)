@@ -1,0 +1,88 @@
+conky.config = {
+    use_xft = true,
+    font = 'DejaVu Sans Mono:size=10',
+    xftalpha = 1,
+    update_interval = 1,
+    total_run_times = 0,
+    own_window = true,
+    own_window_type = 'normal',
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    double_buffer = true,
+    minimum_width = 300, minimum_height = 800, maximum_width = 600,
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = false,
+    default_color = 'white',
+    alignment = 'top_right',
+    gap_x = 30,
+    gap_y = 45,
+    no_buffers = true,
+    uppercase = false,
+    cpu_avg_samples = 2,
+    override_utf8_locale = true,
+    color1 = '#FFFFFF',
+    color2 = '#FFA500',
+};
+
+conky.text = [[
+${color2}${font Ubuntu:bold:size=10}SYSTEM ${hr 2}${font}
+${color1}Distribution: ${execi 3600 lsb_release -ds}
+${color1}Kernel: $kernel
+${color1}System Uptime: $uptime
+${color1}Package Updates: ${execi 3600 apt list --upgradeable | wc -l}
+${color1}Security Updates: ${execi 3600 apt-get upgrade -s | grep "^Inst" | grep -i securi | wc -l}
+${color1}Running Processes: $processes
+${color1}Installed Packages: ${exec dpkg --get-selections | wc -l}
+${color1}System Shutdowns: ${exec journalctl | grep -c 'shutdown'}
+
+${color2}${font Ubuntu:bold:size=10}CPU ${hr 2}${font}
+${color1}CPU Usage: ${cpu cpu0}% ${cpubar cpu0}
+${color1}Core 1 Usage: ${cpu cpu1}% ${cpubar cpu1}
+${color1}Core 2 Usage: ${cpu cpu2}% ${cpubar cpu2}
+${color1}CPU Graph: ${cpugraph cpu0 50,140}
+${color2}${font Ubuntu:bold:size=10}TOP CPU PROCESS ${hr 2}${font}
+${color1}1. ${top name 1} ${top cpu 1}%
+${color1}2. ${top name 2} ${top cpu 2}%
+${color1}3. ${top name 3} ${top cpu 3}%
+${color1}4. ${top name 4} ${top cpu 4}%
+${color1}5. ${top name 5} ${top cpu 5}%
+${color1}6. ${top name 6} ${top cpu 6}%
+${color1}7. ${top name 7} ${top cpu 7}%
+${color1}8. ${top name 8} ${top cpu 8}%
+${color1}9. ${top name 9} ${top cpu 9}%
+${color1}10. ${top name 10} ${top cpu 10}%
+
+${color2}${font Ubuntu:bold:size=10}TOP RAM PROCESSES ${hr 2}${font}
+${color1}1. ${top_mem name 1} ${top_mem mem 1}%
+${color1}2. ${top_mem name 2} ${top_mem mem 2}%
+${color1}3. ${top_mem name 3} ${top_mem mem 3}%
+${color1}4. ${top_mem name 4} ${top_mem mem 4}%
+${color1}5. ${top_mem name 5} ${top_mem mem 5}%
+
+${color2}${font Ubuntu:bold:size=10}MEMORY ${hr 2}${font}
+${color1}RAM Usage: ${mem} of ${memmax} (${memperc}%)
+${color1}RAM Bar: ${membar}
+${color1}Free RAM: $memeasyfree
+
+${color2}${font Ubuntu:bold:size=10}STORAGE ${hr 2}${font}
+${color1}Root: ${fs_used /} of ${fs_size /}
+${color1}Usage: ${fs_used_perc /}% ${fs_bar 6,140 /}
+
+${color2}${font Ubuntu:bold:size=10}Calendar & Other ${hr 2}${font}
+${color1}Date: ${time %d-%m-%Y}
+${color1}Volume: ${exec amixer get Master | grep -o '[0-9]*%' | head -1}
+
+${color2}${font Ubuntu:bold:size=10}LOAD AVERAGES ${hr 2}${font}
+${color1}1 Minute: ${loadavg 1}
+${color1}5 Minutes: ${loadavg 2}
+${color1}15 Minutes: ${loadavg 3}
+
+${color2}${font Ubuntu:bold:size=10}DISK I/O ${hr 2}${font}
+${color1}Read: ${diskio_read}
+${color1}Write: ${diskio_write}
+${color1}Top Disk: ${top_io name 1} ${top_io io_perc 1}%
+]];

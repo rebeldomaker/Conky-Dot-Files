@@ -1,0 +1,64 @@
+conky.config = {
+    use_xft = true,
+    font = 'Ubuntu:size=12',
+    xftalpha = 1,
+    update_interval = 1,
+    total_run_times = 0,
+    own_window = true,
+    own_window_type = 'normal',
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_argb_value = 50,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    double_buffer = true,
+    minimum_width = 300,
+    minimum_height = 900,
+    maximum_width = 300,
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = false,
+    draw_graph_borders = false,
+    default_color = 'white',
+    alignment = 'bottom_left',
+    gap_x = 100,
+    gap_y = 100,
+    no_buffers = true,
+    uppercase = false,
+    cpu_avg_samples = 2,
+    override_utf8_locale = true,
+    color1 = '#4da6ff', -- Blue for default text
+    color2 = '#00b36b', -- Aqua Green for headers
+};
+
+conky.text = [[
+${color2}${font Ubuntu:bold:size=11}TOP CPU PROCESSES ${hr 2}${font}
+${color1}1. ${top name 1} ${top cpu 1}%
+${color1}2. ${top name 2} ${top cpu 2}%
+${color1}3. ${top name 3} ${top cpu 3}%
+
+${color2}${font Ubuntu:bold:size=11}CPU ${hr 2}${font}
+${color1}Core 1 Usage: ${cpu cpu1}% ${cpubar cpu1}
+${color1}Core 2 Usage: ${cpu cpu2}% ${cpubar cpu2}
+${color1}Core 3 Usage: ${cpu cpu3}% ${cpubar cpu3}
+${color1}Core 4 Usage: ${cpu cpu4}% ${cpubar cpu4}
+${cpugraph 100,280}
+${color2}${font Ubuntu:bold:size=11}MEMORY ${hr 2}${font}
+${color1}RAM Usage: ${mem} of ${memmax} (${memperc}%)
+${color1}RAM Bar: ${membar}
+${color1}Free RAM: $memeasyfree
+
+${color2}${font Ubuntu:bold:size=11}TOP RAM PROCESSES ${hr 2}${font}
+${color1}RAM: ${top_mem name 1} ${top_mem mem 1}%
+${color1}RAM: ${top_mem name 2} ${top_mem mem 2}%
+${color1}RAM: ${top_mem name 3} ${top_mem mem 3}%
+
+${color2}${font Ubuntu:bold:size=11}STORAGE ${hr 2}${font}
+${color1}Root: ${fs_used /} of ${fs_size /} (${fs_used_perc /}%)
+${color1}Usage: ${fs_bar 6,140 /}
+
+${color2}${font Ubuntu:bold:size=11}UPDATES & PACKAGES ${hr 2}${font}
+${color1}Packages to Update: ${execi 3600 apt list --upgradeable 2>/dev/null | grep -cv 'Listing...'}
+${color1}Security Updates: ${execi 3600 apt-get upgrade -s | grep "^Inst" | grep -i securi | wc -l}
+${color1}Running Processes: $processes
+${color1}Installed Packages: ${exec dpkg --get-selections | wc -l}
+]];
