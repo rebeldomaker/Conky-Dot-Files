@@ -1,65 +1,66 @@
 conky.config = {
 
-    -- font
-    font = 'Hack:size=13',
+    -- =========================================================================
+    -- 1. CORE ENGINE & UPDATE SETTINGS
+    -- =========================================================================
+    update_interval = 4,              -- Frequency of updating stats (in seconds)
+    total_run_times = 0,              -- 0 = run indefinitely
+    double_buffer = true,             -- Prevents flickering
+    no_buffers = true,                -- Subtract file system buffers from used memory
+    cpu_avg_samples = 3,              -- Number of samples to average for CPU monitoring
+    override_utf8_locale = true,      -- Force UTF-8 support
 
-    use_xft = true,
-    xftalpha = 1,
-
-    update_interval = 4, -- frequency of updating CPU/RAM usage stats
-
-    total_run_times = 0,
-
-    -- own window
+    -- =========================================================================
+    -- 2. WINDOW POSITION & SIZING
+    -- =========================================================================
     own_window = true,
     own_window_type = 'normal',
-    own_window_transparent = true, -- if set to false, creates black transparent background in window
+    own_window_transparent = true,    -- Set to false for a black background
     own_window_argb_visual = true,
     own_window_argb_value = 50,
     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
-
-    double_buffer = true,
-
-    -- window sizing
-    minimum_width = 250,
-    minimum_height = 750,
-    maximum_width = 550,
-
-    -- draw configs, text style and theme
-    draw_shades = false,
-    draw_outline = false,
-    draw_borders = true,
-    draw_graph_borders = true, -- changes the color of drawn borders if set to true
-
-    -- colors
-    default_color = '#50fa7b',
-    color1 = '#4da6ff', -- Blue for default text
-    color2 = '#00b38f', -- Aqua Green for headers
-    color3 = '#ffaa00', -- CPU bar colors in yellow
-    color4 = '#6666ff', -- for bars and other extras
-
 
     alignment = 'bottom_left',
     gap_x = 1508,
     gap_y = 60,
 
-    no_buffers = true,
+    minimum_width = 250,
+    maximum_width = 550,
+    minimum_height = 750,
+
+    -- =========================================================================
+    -- 3. THEME, BORDERS & COLOR PALETTE
+    -- =========================================================================
+    draw_shades = false,
+    draw_outline = false,
+    draw_borders = true,
+    draw_graph_borders = true,
+
+    default_color = '#50fa7b',        -- Default color
+    color1 = '#4da6ff',                -- Blue for standard text
+    color2 = '#00b38f',                -- Aqua Green for section headers
+    color3 = '#ffaa00',                -- Yellow for CPU core bars
+    color4 = '#6666ff',                -- Purple for extra bars & battery
+
+    -- =========================================================================
+    -- 4. FONTS & TEXT STYLING
+    -- =========================================================================
+    font = 'Hack:size=13',
+    use_xft = true,
+    xftalpha = 1,
     uppercase = false,
-
-    cpu_avg_samples = 3,
-
-    override_utf8_locale = true,
-
 
 };
 
 conky.text = [[
+-- 1. SYSTEM INFORMATION
 ${color2}${font Ubuntu:bold:size=12}SYSTEM ${hr 2}${font}
 ${color1}${execi 3600 lsb_release -ds}
 ${color1}Kernel: $kernel
-${color4}Battery: ${battery_percent BAT0}% ${battery_bar BAT0}
 ${color1}Uptime: $uptime
+${color4}Battery: ${battery_percent BAT0}% ${battery_bar BAT0}
 
+-- 2. CPU PROCESSES & CORE USAGE
 ${color2}${font Hack:bold:size=12}TOP CPU PROCESSES ${hr 2}${font}
 ${color1}${top name 1}            ${top cpu 1}%
 ${color1}${top name 2}            ${top cpu 2}%
@@ -80,6 +81,7 @@ ${color3}C7 | ${cpu cpu7}% ${cpubar cpu7}
 ${color3}C8 - ${cpu cpu8}% ${cpubar cpu8}
  ${cpugraph 100,380}
 
+-- 3. MEMORY USAGE & PROCESSES
 ${color2}${font Ubuntu:bold:size=11}RAM STATS ${hr 2}${font}
 ${color1}${mem}/${memmax} | Free: $memeasyfree
 ${color1}Total Memory Use is ${memperc}% ${membar}
@@ -91,10 +93,12 @@ ${color1}${top_mem name 4}                ${top_mem mem 4}%
 ${color1}${top_mem name 5}                ${top_mem mem 5}%
 ${color1}${top_mem name 6}                ${top_mem mem 6}%
 
+-- 4. STORAGE & FILE SYSTEMS
 ${color2}${font Ubuntu:bold:size=11}STORAGE ${hr 2}${font}
 ${color1}Root: ${fs_used /} of ${fs_size /} (${fs_used_perc /}%)
 ${color4}Storage: ${fs_bar 6,140 /}
 
+-- 5. SYSTEM UTILITIES & AUDIO
 ${color2}${font Ubuntu:bold:size=11}OTHER ${hr 2}${font}
 ${color1}Volume: ${exec amixer get Master | grep -o '[0-9]*%' | head -1}
 ${color1}Running Processes: $processes
