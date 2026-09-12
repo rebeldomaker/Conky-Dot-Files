@@ -1,35 +1,55 @@
 conky.config = {
+
+    -- font
+    font = 'Hack:size=13',
+
     use_xft = true,
-    font = 'Hack:size=12',
     xftalpha = 1,
-    update_interval = 4,
+
+    update_interval = 4, -- frequency of updating CPU/RAM usage stats
+
     total_run_times = 0,
+
+    -- own window
     own_window = true,
     own_window_type = 'normal',
-    own_window_transparent = false,
+    own_window_transparent = true, -- if set to false, creates black transparent background in window
     own_window_argb_visual = true,
     own_window_argb_value = 50,
     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
     double_buffer = true,
-    minimum_width = 300,
-    minimum_height = 800,
-    maximum_width = 600,
+
+    -- window sizing
+    minimum_width = 250,
+    minimum_height = 750,
+    maximum_width = 550,
+
+    -- draw configs, text style and theme
     draw_shades = false,
     draw_outline = false,
     draw_borders = true,
-    draw_graph_borders = true,
-    default_color = '#00b38f', -- changes the color of the drawn borders, if draw_borders is set to true
-    alignment = 'bottom_left',
-    gap_x = 1520,
-    gap_y = 250,
-    no_buffers = true,
-    uppercase = false,
-    cpu_avg_samples = 3,
-    override_utf8_locale = true,
+    draw_graph_borders = true, -- changes the color of drawn borders if set to true
+
+    -- colors
+    default_color = '#50fa7b',
     color1 = '#4da6ff', -- Blue for default text
     color2 = '#00b38f', -- Aqua Green for headers
     color3 = '#ffaa00', -- CPU bar colors in yellow
     color4 = '#6666ff', -- for bars and other extras
+
+
+    alignment = 'bottom_left',
+    gap_x = 1508,
+    gap_y = 60,
+
+    no_buffers = true,
+    uppercase = false,
+
+    cpu_avg_samples = 3,
+
+    override_utf8_locale = true,
+
 
 };
 
@@ -39,16 +59,15 @@ ${color1}${execi 3600 lsb_release -ds}
 ${color1}Kernel: $kernel
 ${color4}Battery: ${battery_percent BAT0}% ${battery_bar BAT0}
 ${color1}Uptime: $uptime
-${color1}Volume: ${exec amixer get Master | grep -o '[0-9]*%' | head -1}
 
 ${color2}${font Hack:bold:size=12}TOP CPU PROCESSES ${hr 2}${font}
-${color1}1. ${top name 1}            ${top cpu 1}%
-${color1}2. ${top name 2}            ${top cpu 2}%
-${color1}3. ${top name 3}            ${top cpu 3}%
-${color1}4. ${top name 4}            ${top cpu 4}%
-${color1}5. ${top name 5}            ${top cpu 5}%
-${color1}6. ${top name 6}            ${top cpu 6}%
-${color1}7. ${top name 7}            ${top cpu 7}%
+${color1}${top name 1}            ${top cpu 1}%
+${color1}${top name 2}            ${top cpu 2}%
+${color1}${top name 3}            ${top cpu 3}%
+${color1}${top name 4}            ${top cpu 4}%
+${color1}${top name 5}            ${top cpu 5}%
+${color1}${top name 6}            ${top cpu 6}%
+${color1}${top name 7}            ${top cpu 7}%
 
 ${color2}${font Ubuntu:bold:size=11}CPU CORE USAGE ${hr 2}${font}
 ${color3}C1 | ${cpu cpu1}% ${cpubar cpu1}
@@ -59,7 +78,7 @@ ${color3}C5 | ${cpu cpu5}% ${cpubar cpu5}
 ${color3}C6 - ${cpu cpu6}% ${cpubar cpu6}
 ${color3}C7 | ${cpu cpu7}% ${cpubar cpu7}
 ${color3}C8 - ${cpu cpu8}% ${cpubar cpu8}
-${cpugraph 100,380}
+ ${cpugraph 100,380}
 
 ${color2}${font Ubuntu:bold:size=11}RAM STATS ${hr 2}${font}
 ${color1}${mem}/${memmax} | Free: $memeasyfree
@@ -77,7 +96,7 @@ ${color1}Root: ${fs_used /} of ${fs_size /} (${fs_used_perc /}%)
 ${color4}Storage: ${fs_bar 6,140 /}
 
 ${color2}${font Ubuntu:bold:size=11}OTHER ${hr 2}${font}
+${color1}Volume: ${exec amixer get Master | grep -o '[0-9]*%' | head -1}
 ${color1}Running Processes: $processes
 ${color1}Installed Packages: ${exec dpkg --get-selections | wc -l}
-${color1}Date: ${time %d-%m-%Y}
 ]];
