@@ -7,7 +7,7 @@ conky.config = {
     total_run_times = 0,              -- 0 = run indefinitely
     double_buffer = true,             -- Prevents flickering
     no_buffers = true,                -- Subtract file system buffers from used memory
-    cpu_avg_samples = 3,              -- Number of samples to average for CPU monitoring
+    cpu_avg_samples = 4,              -- Number of samples to average for CPU monitoring
     override_utf8_locale = true,      -- Force UTF-8 support
 
     -- =========================================================================
@@ -15,7 +15,7 @@ conky.config = {
     -- =========================================================================
     own_window = true,
     own_window_type = 'normal',
-    own_window_transparent = true,    -- Set to false for a black background
+    own_window_transparent = true,    -- Set to true for a dark transparent background
     own_window_argb_visual = true,
     own_window_argb_value = 50,
     own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
@@ -37,10 +37,10 @@ conky.config = {
     draw_graph_borders = true,
 
     default_color = '#50fa7b',        -- Default color
-    color1 = '#4da6ff',                -- Blue for standard text
-    color2 = '#00b38f',                -- Aqua Green for section headers
-    color3 = '#ffaa00',                -- Yellow for CPU core bars
-    color4 = '#6666ff',                -- Purple for extra bars & battery
+    color1 = '#8be9fd',                -- Blue for standard text
+    color2 = '#50fa7b',                -- Aqua Green for section headers
+    color3 = '#8be9fd',                -- Yellow for CPU core bars
+    color4 = '#6272a4',                -- Purple for extra bars & battery
 
     -- =========================================================================
     -- 4. FONTS & TEXT STYLING
@@ -53,54 +53,46 @@ conky.config = {
 };
 
 conky.text = [[
--- 1. SYSTEM INFORMATION
-${color2}${font Ubuntu:bold:size=12}SYSTEM ${hr 2}${font}
+${color2}${font Ubuntu:bold:size=13}SYSTEM ${hr 2}${font}
 ${color1}${execi 3600 lsb_release -ds}
-${color1}Kernel: $kernel
 ${color1}Uptime: $uptime
-${color4}Battery: ${battery_percent BAT0}% ${battery_bar BAT0}
 
--- 2. CPU PROCESSES & CORE USAGE
 ${color2}${font Hack:bold:size=12}TOP CPU PROCESSES ${hr 2}${font}
 ${color1}${top name 1}            ${top cpu 1}%
 ${color1}${top name 2}            ${top cpu 2}%
 ${color1}${top name 3}            ${top cpu 3}%
 ${color1}${top name 4}            ${top cpu 4}%
-${color1}${top name 5}            ${top cpu 5}%
-${color1}${top name 6}            ${top cpu 6}%
-${color1}${top name 7}            ${top cpu 7}%
 
 ${color2}${font Ubuntu:bold:size=11}CPU CORE USAGE ${hr 2}${font}
-${color3}C1 | ${cpu cpu1}% ${cpubar cpu1}
-${color3}C2 - ${cpu cpu2}% ${cpubar cpu2}
-${color3}C3 | ${cpu cpu3}% ${cpubar cpu3}
-${color3}C4 - ${cpu cpu4}% ${cpubar cpu4}
-${color3}C5 | ${cpu cpu5}% ${cpubar cpu5}
-${color3}C6 - ${cpu cpu6}% ${cpubar cpu6}
-${color3}C7 | ${cpu cpu7}% ${cpubar cpu7}
-${color3}C8 - ${cpu cpu8}% ${cpubar cpu8}
+${color3} ${cpu cpu1}% ${cpubar cpu1}
+${color3} ${cpu cpu2}% ${cpubar cpu2}
+${color3} ${cpu cpu3}% ${cpubar cpu3}
+${color3} ${cpu cpu4}% ${cpubar cpu4}
+${color3} ${cpu cpu5}% ${cpubar cpu5}
+${color3} ${cpu cpu6}% ${cpubar cpu6}
+${color3} ${cpu cpu7}% ${cpubar cpu7}
+${color3} ${cpu cpu8}% ${cpubar cpu8}
  ${cpugraph 100,380}
-
--- 3. MEMORY USAGE & PROCESSES
 ${color2}${font Ubuntu:bold:size=11}RAM STATS ${hr 2}${font}
 ${color1}${mem}/${memmax} | Free: $memeasyfree
 ${color1}Total Memory Use is ${memperc}% ${membar}
-
 ${color1}${top_mem name 1}                ${top_mem mem 1}% 
 ${color1}${top_mem name 2}                ${top_mem mem 2}%
 ${color1}${top_mem name 3}                ${top_mem mem 3}%
 ${color1}${top_mem name 4}                ${top_mem mem 4}%
 ${color1}${top_mem name 5}                ${top_mem mem 5}%
 ${color1}${top_mem name 6}                ${top_mem mem 6}%
+${color1}${top_mem name 7}                ${top_mem mem 7}%
+${color1}${top_mem name 8}                ${top_mem mem 8}%
+${color1}${top_mem name 9}                ${top_mem mem 9}%
+${color1}${top_mem name 10}                ${top_mem mem 10}%
 
--- 4. STORAGE & FILE SYSTEMS
 ${color2}${font Ubuntu:bold:size=11}STORAGE ${hr 2}${font}
 ${color1}Root: ${fs_used /} of ${fs_size /} (${fs_used_perc /}%)
 ${color4}Storage: ${fs_bar 6,140 /}
 
--- 5. SYSTEM UTILITIES & AUDIO
 ${color2}${font Ubuntu:bold:size=11}OTHER ${hr 2}${font}
-${color1}Volume: ${exec amixer get Master | grep -o '[0-9]*%' | head -1}
 ${color1}Running Processes: $processes
 ${color1}Installed Packages: ${exec dpkg --get-selections | wc -l}
+
 ]];
